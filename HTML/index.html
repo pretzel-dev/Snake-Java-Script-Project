@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+
+<canvas id="GameCanvas" width="300" height="300">
+</canvas>
+
+<script>
+const GameSpeed = 100;
+const CanvasBorderColor = 'red';
+const CanvasBGColor = 'grey';
+const SnakeColor = 'lightgreen';
+const SnakeBorder = 'green';
+const FoodColor = 'lightpink';
+const FoodBorder = 'pink';
+
+const gameCanvas = document.getElementById("GameCanvas");
+
+const ctx = gameCanvas.getContext("2d");
+
+document.addEventListener("keydown", ChangeDirection);
+
+let Snake = [
+{x: 150, y: 150},
+{x: 140, y: 150},
+{x: 130, y: 150},
+{x: 120, y: 150}
+]
+
+let changingDirection = false;
+
+let dx = 10;
+let dy = 0;
+
+main();
+
+function main(){
+
+    DrawCanvas();
+    DrawSnake();
+}
+
+
+function DrawCanvas(){
+    // Set up the colors
+    ctx.fillStyle = CanvasBGColor;
+    ctx.strokestyle = CanvasBorderColor;
+    
+    // Fill the background of a Game Canvas
+    ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
+
+    // Draw a border of a Game Canvas
+    ctx.strokeRect(0, 0, gameCanvas.width, gameCanvas.height);
+}
+
+function DrawSnake(){
+    Snake.forEach(DrawSnakePart);
+}
+
+function DrawSnakePart(snakePart){
+    // Set up colors of a snake
+    ctx.fillStyle = SnakeColor;
+    ctx.strokestyle = SnakeBorder;
+
+
+    // Fill body of a snake
+    ctx.fillRect(snakePart.x, snakePart.y, 10, 10);
+
+    // Draw a border around the snake part
+    ctx.strokeRect(snakePart.x, snakePart.y, 10, 10);
+}
+
+function ChangeDirection(event){
+    W_Key = 37;
+    S_Key = 39;
+    A_Key = 38;
+    D_Key = 40;
+
+    if(changingDirection) return;
+
+    changingDirection = true;
+
+    const keyPressed = event.keyCode;
+
+
+    const goingUp = dy === -10;
+    const goingDown = dy === 10;
+    const goingRight = dx === 10;
+    const goingLeft = dx === -10;
+
+    if (keyPressed === A_Key && !goingRight) {
+        dx = -10;
+        dy = 0;
+    }
+    if (keyPressed === W_Key && !goingDown) {
+        dx = 0;
+        dy = -10;
+    }
+    if (keyPressed === D_Key && !goingLeft) {
+        dx = 10;
+        dy = 0;
+    }
+    if (keyPressed === S_Key && !goingUp) {
+        dx = 0;
+        dy = 10;
+    }
+}
+
+</script>
+<body>
+
+</body>
+</html>
